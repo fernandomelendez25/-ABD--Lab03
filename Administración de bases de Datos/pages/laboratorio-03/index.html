@@ -1,0 +1,86 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Administaricón de Almacenamiento y usuarios</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="Google Analytics ID"
+                  id="laboratorio-03"
+                  title="Administaricón de Almacenamiento y usuarios"
+                  environment="web"
+                  feedback-link="A link where users can go to provide feedback (Maybe the git repo)">
+    
+      <google-codelab-step label="Objetivos" duration="1">
+        <ul>
+<li>Administrar el almacenamiento de Oracle a través Tablespace y Datafiles.</li>
+<li>Conocer como es la sintaxis de la creación de un usuario y perfiles.</li>
+<li>Aprender los diferentes tipos de roles para los usuarios.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Herramientas" duration="1">
+        <p>Para esta práctica se hará uso de estas herramientas:</p>
+<h2 is-upgraded>Oracle DB 19c</h2>
+<p class="image-container"><img alt="imagen" src="img\\867ffd5b4c6cd21a.png"></p>
+<p>Oracle Database es un sistema de gestión de base de datos de tipo objeto-relacional (ORDBMS, por el acrónimo en inglés de Object-Relational Data Base Management System), desarrollado por Oracle Corporation. Oracle Database 19c es la versión actual a largo plazo, que además proporciona el nivel más alto de estabilidad de la versión y el plazo más largo para asistencia y corrección de errores.</p>
+<h2 is-upgraded>SQL Developer</h2>
+<p><img alt="sql" src="img\\1985c13c83b1faed.png"> Es una interfaz gráfica de usuario gratuita que permite a los usuarios y administradores de bases de datos realizar sus tareas con menos clicks y pulsaciones de teclas. SQL Developer es una herramienta de productividad cuyo objetivo principal es ayudar al usuario final a ahorrar tiempo y maximizar el retorno de la inversión en el paquete de tecnología de Oracle Database.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Introducción" duration="0">
+        <p>En esta guía se dará a conocer las diferencias entre un tablespaces y datafiles, al igual que como se administran cada uno de ellos, como puede ser crearlos, cambiar sus parámetros y eliminarlos. Al igual aprenderemos como crear usuarios, a crear roles que estos mismos usuarios pueden tener y crear perfiles, y como podemos dejarles ciertos permisos dependiendo de las tareas que deben realizar.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Administración de almacenamiento" duration="0">
+        <p>Como sabemos, Oracle guarda los datos de manera lógica en un tablespace y  físicamente en datafiles, que corresponden o están asociados a los tablespaces. Las bases de datos, tablespaces y datafiles están estrechamente relacionadas, pero es  de importancia saber que existen diferencias muy grandes:</p>
+<ul>
+<li>Una base de datos Oracle consiste en uno o más unidades de almacenamiento lógico llamados tablespaces, estos tablespaces son los que guardan todos los datos de la base de datos.</li>
+<li>Cada tablespaces en una base de datos Oracle consiste en uno o más archivos llamados datafiles, los cuales son la estructura física de los tablespaces.</li>
+<li>Los datos son guardados en datafiles que constituyen cada tablespace de la base   de datos, por ejemplo, la base de datos más simple podría tener como mínimo un tablespace y un datafiles.</li>
+</ul>
+<p class="image-container"><img alt="tablespace" src="img\\389f98f4f0191738.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Tablespace" duration="0">
+        <p>La estructura lógica está formada por los tablespace y los objetos de un esquema de la base de  datos (tablas, vistas, índices...)</p>
+<p class="image-container"><img alt="tablespace" src="img\\2de55f678a66293.png"></p>
+<p>Una base de datos está formada por una o varias unidades lógicas llamadas Tablespaces. Un tablespace es la unidad de almacenamiento lógico. Además, cada una de estos Tablespaces está formada por uno o varios ficheros físicos que son los datafiles. Un datafile solamente puede pertenecer a un tablespace. Por lo tanto, los datafiles de una base de datos son todos los datafiles que forman parte de todos los tablespaces de la base. Cuando se crea una base de datos, hay que crear al menos un tablespace, por lo que durante el proceso de creación de la base de datos siempre se indica el tablespace principal de ésta, que se llama SYSTEM</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
