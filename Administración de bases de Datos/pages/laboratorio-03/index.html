@@ -48,15 +48,13 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="Introducción" duration="0">
-        <p>En esta guía se dará a conocer las diferencias entre un tablespaces y datafiles, al igual que como se administran cada uno de ellos, como puede ser crearlos, cambiar sus parámetros y eliminarlos. Al igual aprenderemos como crear usuarios, a crear roles que estos mismos usuarios pueden tener y crear perfiles, y como podemos dejarles ciertos permisos dependiendo de las tareas que deben realizar.</p>
-
+      <google-codelab-step label="Introducción" duration="1">
+        
 
       </google-codelab-step>
     
-      <google-codelab-step label="Administración de almacenamiento" duration="0">
-        <p>Como sabemos, Oracle guarda los datos de manera lógica en un tablespace y  físicamente en datafiles, que corresponden o están asociados a los tablespaces. Las bases de datos, tablespaces y datafiles están estrechamente relacionadas, pero es  de importancia saber que existen diferencias muy grandes:</p>
-<ul>
+      <google-codelab-step label="Administración de almacenamiento" duration="5">
+        <ul>
 <li>Una base de datos Oracle consiste en uno o más unidades de almacenamiento lógico llamados tablespaces, estos tablespaces son los que guardan todos los datos de la base de datos.</li>
 <li>Cada tablespaces en una base de datos Oracle consiste en uno o más archivos llamados datafiles, los cuales son la estructura física de los tablespaces.</li>
 <li>Los datos son guardados en datafiles que constituyen cada tablespace de la base   de datos, por ejemplo, la base de datos más simple podría tener como mínimo un tablespace y un datafiles.</li>
@@ -66,10 +64,56 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="Tablespace" duration="0">
-        <p>La estructura lógica está formada por los tablespace y los objetos de un esquema de la base de  datos (tablas, vistas, índices...)</p>
-<p class="image-container"><img alt="tablespace" src="img\\2de55f678a66293.png"></p>
-<p>Una base de datos está formada por una o varias unidades lógicas llamadas Tablespaces. Un tablespace es la unidad de almacenamiento lógico. Además, cada una de estos Tablespaces está formada por uno o varios ficheros físicos que son los datafiles. Un datafile solamente puede pertenecer a un tablespace. Por lo tanto, los datafiles de una base de datos son todos los datafiles que forman parte de todos los tablespaces de la base. Cuando se crea una base de datos, hay que crear al menos un tablespace, por lo que durante el proceso de creación de la base de datos siempre se indica el tablespace principal de ésta, que se llama SYSTEM</p>
+      <google-codelab-step label="Tablespace" duration="30">
+        <p class="image-container"><img style="width: 500.00px" src="img\\2de55f678a66293.png"></p>
+<p>Una base de datos está formada por una o varias unidades lógicas llamadas Tablespaces. Un tablespace es la unidad de almacenamiento lógico. Además, cada una de estos Tablespaces está formada por uno o varios ficheros físicos que son los datafiles. Un datafile solamente puede pertenecer a un tablespace. Por lo tanto, los datafiles de una base de datos son todos los datafiles que forman parte de todos los tablespaces de la base. Cuando se crea una base de datos, hay que crear al menos un tablespace, por lo que durante el proceso de creación de la base de datos siempre se indica el tablespace principal de ésta, que se llama SYSTEM.</p>
+<p><em>Propiedades:</em></p>
+<ul>
+<li>Localización de los ficheros de datos.</li>
+<li>Especificación de máximas cuotas de consumo de disco.</li>
+<li>Backup de datos.</li>
+</ul>
+<p>Cuando un objeto se crea dentro de un cierto Tablespace, este objeto adquiere todas las propiedades antes descritas del Tablespace utilizado.</p>
+<p><em>Características:</em></p>
+<ul>
+<li>Debe estar asociado a un Datafiles.</li>
+<li>Un Tablespace está asociado a uno o varios Datafiles y puede tener uno o ovarios usuarios.</li>
+</ul>
+<h2 is-upgraded>5.1 Creación de Tablespace</h2>
+<p>Una de las tareas habituales en la administración de una base de datos Oracle es la de crear un nuevo Tablespace para contener nuevos objetos, La sentencia CREATE TABLESPACE sirve para crear un tablespace en una base de datos Oracle. Recordemos que los Tablespaces permanentes contienen objetos, tablas, índices, etc. de uno o más esquemas. Los objetos en los tablespaces permanentes se almacenan en archivos de datos, datafiles.</p>
+<p><strong>Ejemplo 1.1</strong></p>
+<p class="image-container"><img alt="Ejemplo1.1" src="img\\d8ba0a199f2a5f1d.png"></p>
+<h2 is-upgraded>5.2 SQL Developer</h2>
+<p>Podemos crear tablespaces donde el/los datafiles se vayan extendiendo de forma automática, si lo creamos de esta manera debemos tener cuidado en no olvidar la cláusula MAXSIZE, ya que si la omitimos el datafile se extenderá hasta llenar el filesystem donde esté creado.</p>
+<p><strong>Ejempo 2.2</strong></p>
+<p class="image-container"><img alt="Ej2.2" src="img\\311654f432f9af2a.png"><img alt="Ejercicio1" src="img\\2b215e1e235e3289.png"></p>
+<h2 is-upgraded>5.3 SQL Developer</h2>
+<p>Para cambiar el tamaño de un tablespace tenemos dos posibles opciones:</p>
+<ul>
+<li>Modificar el tamaño de un datafile.</li>
+<li>Agregar un nuevo datafile.</li>
+</ul>
+<p><strong>Ejemplo 1.3. agregando nuevos datafiles.</strong></p>
+<p>Ahora modificaremos el tablespace creado en el Ejercicio 1. Antes de modificarlo es recomendable ver cuántos datafiles conforman el tablespace, y que tamaño tienen, para en base a esta información, añadir uno nuevo, siguiendo el estándar de nombres, y el tamaño apropiado.</p>
+<p>A continuación, se presenta la forma de ver la información de los datafiles del tablespace. <img style="width: 300.00px" src="img\\4bacb47323405991.png"></p>
+<p>Si ejecutamos este SELECT con el tablespace llamado &#34;tablespace2&#34; veremos la siguiente información:</p>
+<p class="image-container"><img style="width: 350.00px" src="img\\d8e75b9f3c76079b.png"></p>
+<p>Lo que nos indica que este tablespace posee un solo datafile de 5 MB de tamaño. A continuación, agregamos un nuevo datafile.</p>
+<p class="image-container"><img style="width: 500.00px" src="img\\112d1527e3bc65d3.png"><img style="width: 700.00px" src="img\\fc37a5af85377934.png"></p>
+<p>Mostrando la información de tablespace2 nuevamente:</p>
+<p class="image-container"><img style="width: 350.00px" src="img\\b07d4d9744f11224.png"></p>
+<p><strong>Ejemplo 1.4 modificando un datafile.</strong></p>
+<p>También podemos modificar un datafile existente.</p>
+<p><img alt="Ejemplo1.4" src="img\\d1c17292e497cb84.png"> Mostrando la información de tablespace2 nuevamente:</p>
+<p class="image-container"><img style="width: 400.00px" src="img\\e2e942c84e1f1a2.png"></p>
+<p class="image-container"><img alt="ejercicio3" src="img\\c6d5619522557b3e.png"></p>
+<h2 is-upgraded>5.4. SQL Developer</h2>
+<p>Primero debemos asegurarnos de que el contenido de los archivos de datos no es necesario, o se ha movido a otro tablespace.</p>
+<p><strong>Ejemplo 1.5</strong></p>
+<p>Borrando el tablespace1 anteriormente creado.</p>
+<p class="image-container"><img style="width: 400.00px" src="img\\7c8862ad7c713bcd.png"></p>
+<p><em>¡La sentencia anterior borra un tablespace, pero NO los datafiles!</em> ahora podemos ir a borrar manualmente el datafile. La siguiente instrucción borra un tablespace incluyendo sus datafiles.</p>
+<p class="image-container"><img style="width: 700.00px" src="img\\913916481b75875c.png"></p>
 
 
       </google-codelab-step>
