@@ -1,12 +1,11 @@
-author: Author Name
+author: Fernando Melendez, Marcos Granillo
 summary: Laboratorio sobre Administración de alamacenamiento y usuarios 
 id: laboratorio-03
 tags: guide. 
 categories: Roles, Usuarios.
 environments: Web
 status: Published
-feedback link: A link where users can go to provide feedback (Maybe the git repo)
-analytics account: Google Analytics ID
+feedback link: https://github.com/vareladev/vareladev.github.io/issues
 
 # Administaricón de Almacenamiento y usuarios 
 
@@ -513,7 +512,9 @@ Asignar el perfil al usuario creado en el ejercicio 4.
 
 **Versión 2:** Fernando José Meléndez Orellana (00018720@uca.edu.sv), Marcos Benjamin Granillo Flores (00028320@uca.edu.sv).
 
-**Responsables:** Erick Varela Guzmán (evarela@uca.edu.sv), Correspondencia: evarela@uca.edu.sv
+**Responsables:** Erick Varela Guzmán (evarela@uca.edu.sv) 
+
+**Correspondencia:** evarela@uca.edu.sv
 
 Departamento de Electrónica e Informática, Universidad Centroamericana José Simeón Cañas, La Libertad, El Salvador.
 

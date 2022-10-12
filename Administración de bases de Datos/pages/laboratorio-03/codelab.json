@@ -3,7 +3,7 @@
   "format": "html",
   "prefix": "https://storage.googleapis.com",
   "mainga": "UA-49880327-14",
-  "updated": "2022-10-12T11:57:38-06:00",
+  "updated": "2022-10-12T14:04:17-06:00",
   "id": "laboratorio-03",
   "duration": 38,
   "title": "Administaricón de Almacenamiento y usuarios",
@@ -21,7 +21,6 @@
     "guide.",
     "web"
   ],
-  "feedback": "A link where users can go to provide feedback (Maybe the git repo)",
-  "ga": "Google Analytics ID",
+  "feedback": "https://github.com/vareladev/vareladev.github.io/issues",
   "url": "laboratorio-03"
 }
