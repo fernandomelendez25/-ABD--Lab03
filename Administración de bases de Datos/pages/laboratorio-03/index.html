@@ -49,7 +49,8 @@
       </google-codelab-step>
     
       <google-codelab-step label="Introducción" duration="1">
-        
+        <p>En esta guía se dará a conocer las diferencias entre un tablespaces y datafiles, al igual que como se administran cada uno de ellos, como puede ser crearlos, cambiar sus parámetros y eliminarlos. Al igual aprenderemos como crear usuarios, a crear roles que estos mismos usuarios pueden tener y crear perfiles, y como podemos dejarles ciertos permisos dependiendo de las tareas que deben realizar.</p>
+
 
       </google-codelab-step>
     
@@ -82,11 +83,18 @@
 <h2 is-upgraded>5.1 Creación de Tablespace</h2>
 <p>Una de las tareas habituales en la administración de una base de datos Oracle es la de crear un nuevo Tablespace para contener nuevos objetos, La sentencia CREATE TABLESPACE sirve para crear un tablespace en una base de datos Oracle. Recordemos que los Tablespaces permanentes contienen objetos, tablas, índices, etc. de uno o más esquemas. Los objetos en los tablespaces permanentes se almacenan en archivos de datos, datafiles.</p>
 <p><strong>Ejemplo 1.1</strong></p>
-<p class="image-container"><img alt="Ejemplo1.1" src="img\\d8ba0a199f2a5f1d.png"></p>
+<pre><code>    CREATE TABLESPACE tablespace1
+    DATAFILE &#39;C:/datafile_tb1.dbf&#39; SIZE 10M;
+</code></pre>
 <h2 is-upgraded>5.2 SQL Developer</h2>
 <p>Podemos crear tablespaces donde el/los datafiles se vayan extendiendo de forma automática, si lo creamos de esta manera debemos tener cuidado en no olvidar la cláusula MAXSIZE, ya que si la omitimos el datafile se extenderá hasta llenar el filesystem donde esté creado.</p>
-<p><strong>Ejempo 2.2</strong></p>
-<p class="image-container"><img alt="Ej2.2" src="img\\311654f432f9af2a.png"><img alt="Ejercicio1" src="img\\2b215e1e235e3289.png"></p>
+<p><strong>Ejemplo 1.2</strong></p>
+<pre><code>  CREATE TABLESPACE tablespace2
+    DATAFILE &#39;C:/datafile_tb2.dbf&#39; SIZE 5M
+    AUTOEXTEND ON NEXT 1M MAXSIZE 20M;
+</code></pre>
+<h3 is-upgraded>Ejercicio 1</h3>
+<p>Crear un tablespace auto expandible llamado TB_&lt;Carnet&gt;	 (sustituir &#34;&lt;Carnet&gt;&#34; por su número de carnet), asignar un datafile de 8 megabytes y que será guardado en el disco C. El tamaño máximo será de 36 Megabytes con extensiones de 4 Megabytes.</p>
 <h2 is-upgraded>5.3 SQL Developer</h2>
 <p>Para cambiar el tamaño de un tablespace tenemos dos posibles opciones:</p>
 <ul>
@@ -95,25 +103,48 @@
 </ul>
 <p><strong>Ejemplo 1.3. agregando nuevos datafiles.</strong></p>
 <p>Ahora modificaremos el tablespace creado en el Ejercicio 1. Antes de modificarlo es recomendable ver cuántos datafiles conforman el tablespace, y que tamaño tienen, para en base a esta información, añadir uno nuevo, siguiendo el estándar de nombres, y el tamaño apropiado.</p>
-<p>A continuación, se presenta la forma de ver la información de los datafiles del tablespace. <img style="width: 300.00px" src="img\\4bacb47323405991.png"></p>
+<p>A continuación, se presenta la forma de ver la información de los datafiles del tablespace.</p>
+<pre><code>  SELECT * FROM DBA_TABLESPACES;
+  SELECT * FROM DBA_DATA_FILES;
+</code></pre>
 <p>Si ejecutamos este SELECT con el tablespace llamado &#34;tablespace2&#34; veremos la siguiente información:</p>
 <p class="image-container"><img style="width: 350.00px" src="img\\d8e75b9f3c76079b.png"></p>
 <p>Lo que nos indica que este tablespace posee un solo datafile de 5 MB de tamaño. A continuación, agregamos un nuevo datafile.</p>
-<p class="image-container"><img style="width: 500.00px" src="img\\112d1527e3bc65d3.png"><img style="width: 700.00px" src="img\\fc37a5af85377934.png"></p>
+<pre><code>  ALTER TABLESPACE tablespace2
+   ADD DATAFILE &#39;C:/datafile_tb2_2.dbf&#39; SIZE 5M AUTOEXTEND OFF;
+</code></pre>
+<h3 is-upgraded>Ejercicio 2</h3>
+<p>Añadir un nuevo datafile al tablespace creado en el ejercicio 1. El tamaño será 10 Megabytes y será almacenado en el disco C:.</p>
 <p>Mostrando la información de tablespace2 nuevamente:</p>
 <p class="image-container"><img style="width: 350.00px" src="img\\b07d4d9744f11224.png"></p>
 <p><strong>Ejemplo 1.4 modificando un datafile.</strong></p>
 <p>También podemos modificar un datafile existente.</p>
-<p><img alt="Ejemplo1.4" src="img\\d1c17292e497cb84.png"> Mostrando la información de tablespace2 nuevamente:</p>
+<pre><code>  ALTER DATABASE DATAFILE &#39;C:/datafile_tb2_2.dbf&#39; RESIZE 10M;
+</code></pre>
+<p>Mostrando la información de tablespace2 nuevamente:</p>
 <p class="image-container"><img style="width: 400.00px" src="img\\e2e942c84e1f1a2.png"></p>
-<p class="image-container"><img alt="ejercicio3" src="img\\c6d5619522557b3e.png"></p>
+<h3 is-upgraded>Ejercicio 3</h3>
+<p>Redimensionar el segundo datafile creado a 16 Megabytes.</p>
 <h2 is-upgraded>5.4. SQL Developer</h2>
 <p>Primero debemos asegurarnos de que el contenido de los archivos de datos no es necesario, o se ha movido a otro tablespace.</p>
 <p><strong>Ejemplo 1.5</strong></p>
 <p>Borrando el tablespace1 anteriormente creado.</p>
-<p class="image-container"><img style="width: 400.00px" src="img\\7c8862ad7c713bcd.png"></p>
+<pre><code>  DROP TABLESPACE tablespace1;
+</code></pre>
 <p><em>¡La sentencia anterior borra un tablespace, pero NO los datafiles!</em> ahora podemos ir a borrar manualmente el datafile. La siguiente instrucción borra un tablespace incluyendo sus datafiles.</p>
-<p class="image-container"><img style="width: 700.00px" src="img\\913916481b75875c.png"></p>
+<pre><code>  DROP TABLESPACE tablespace2 INCLUDING CONTENTS AND DATAFILES;
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Datafiles" duration="0">
+        <p>Un datafile es la representación física de un tablespace. Son los &#34;ficheros de datos&#34; donde se almacena la información físicamente. Los tablespaces están formados por datafiles, el crecimiento en el uso de memoria o el modo de gestión determinarán algunas configuraciones en ellos.</p>
+<h2 is-upgraded>Ejemplos de Administración de Datafiles</h2>
+<p class="image-container"><img style="width: 650.00px" src="img\\19c256a49cb96405.png"><img style="width: 650.00px" src="img\\87e43db5e8483648.png"></p>
+<aside class="special"><p><strong>Nota:</strong></p>
+<p>   Los nuevos archivos deben existir antes de poder renombrar, esta sentencia no crea archivos. </p>
+</aside>
 
 
       </google-codelab-step>

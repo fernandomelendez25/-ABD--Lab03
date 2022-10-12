@@ -35,6 +35,7 @@ Es una interfaz gráfica de usuario gratuita que permite a los usuarios y admini
 
 ## Introducción
 Duration: 0:01:00
+
 En esta guía se dará a conocer las diferencias entre un tablespaces y datafiles, al igual que como se administran cada uno de ellos, como puede ser crearlos, cambiar sus parámetros y eliminarlos. Al igual aprenderemos como crear usuarios, a crear roles que estos mismos usuarios pueden tener y crear perfiles, y como podemos dejarles ciertos permisos dependiendo de las tareas que deben realizar.
 
 ## Administración de almacenamiento
@@ -76,18 +77,24 @@ permanentes contienen objetos, tablas, índices, etc. de uno o más esquemas. Lo
 los tablespaces permanentes se almacenan en archivos de datos, datafiles.
 
 **Ejemplo 1.1** 
-
-![Ejemplo1.1](img/ejemplo1.2SQLDEV2.1.png)
+```
+    CREATE TABLESPACE tablespace1
+    DATAFILE 'C:/datafile_tb1.dbf' SIZE 10M;
+```
 
 ### 5.2 SQL Developer 
 Podemos crear tablespaces donde el/los datafiles se vayan extendiendo de forma automática,
 si lo creamos de esta manera debemos tener cuidado en no olvidar la cláusula MAXSIZE, ya
 que si la omitimos el datafile se extenderá hasta llenar el filesystem donde esté creado. 
 
-**Ejempo 2.2** 
-
-![Ej2.2](img/ejemplo2.2.png)
-![Ejercicio1](img/EJERCICIO1sql5.2.png)
+**Ejemplo 1.2** 
+```
+  CREATE TABLESPACE tablespace2
+    DATAFILE 'C:/datafile_tb2.dbf' SIZE 5M
+    AUTOEXTEND ON NEXT 1M MAXSIZE 20M;
+```
+#### Ejercicio 1
+Crear un tablespace auto expandible llamado TB_&lt;Carnet&gt;	 (sustituir “&lt;Carnet&gt;” por su número de carnet), asignar un datafile de 8 megabytes y que será guardado en el disco C. El tamaño máximo será de 36 Megabytes con extensiones de 4 Megabytes.
 
 ### 5.3 SQL Developer
 Para cambiar el tamaño de un tablespace tenemos dos posibles opciones:
@@ -101,7 +108,11 @@ recomendable ver cuántos datafiles conforman el tablespace, y que tamaño tiene
 a esta información, añadir uno nuevo, siguiendo el estándar de nombres, y el tamaño apropiado.
 
 A continuación, se presenta la forma de ver la información de los datafiles del tablespace.
-<img src="img/select.png" width="300">
+
+```
+  SELECT * FROM DBA_TABLESPACES;
+  SELECT * FROM DBA_DATA_FILES;
+```
 
 Si ejecutamos este SELECT con el tablespace llamado “tablespace2” veremos la siguiente información:
 
@@ -109,9 +120,13 @@ Si ejecutamos este SELECT con el tablespace llamado “tablespace2” veremos la
 
 Lo que nos indica que este tablespace posee un solo datafile de 5 MB de tamaño. A continuación, agregamos un nuevo datafile.
 
-<img src="img/agregandodatafile.png" width="500">
+```
+  ALTER TABLESPACE tablespace2
+   ADD DATAFILE 'C:/datafile_tb2_2.dbf' SIZE 5M AUTOEXTEND OFF;
+```
 
-<img src="img/Ejercicio2datafile.png" width="700">
+#### Ejercicio 2
+Añadir un nuevo datafile al tablespace creado en el ejercicio 1. El tamaño será 10 Megabytes y será almacenado en el disco C:.
 
 
 Mostrando la información de tablespace2 nuevamente:
@@ -123,12 +138,16 @@ Mostrando la información de tablespace2 nuevamente:
 
 También podemos modificar un datafile existente.
 
-![Ejemplo1.4](img/datafileE1.4.png)
+```
+  ALTER DATABASE DATAFILE 'C:/datafile_tb2_2.dbf' RESIZE 10M;
+```
+
 Mostrando la información de tablespace2 nuevamente:
 
 <img src="img/TablespaceEJE1.4.png" width="400">
 
-![ejercicio3](img/Ejercicio3deEjemplo1.4.png)
+#### Ejercicio 3
+Redimensionar el segundo datafile creado a 16 Megabytes.
 
 ### 5.4. SQL Developer
 Primero debemos asegurarnos de que el contenido de los archivos de datos no es necesario, o se ha movido a otro tablespace.
@@ -137,12 +156,28 @@ Primero debemos asegurarnos de que el contenido de los archivos de datos no es n
 
 Borrando el tablespace1 anteriormente creado.
 
-<img src="img/borrandotablespace1.png" width="400">
+```
+  DROP TABLESPACE tablespace1;
+```
 
 
 *¡La sentencia anterior borra un tablespace, pero NO los datafiles!* ahora podemos ir a borrar manualmente el datafile. La siguiente instrucción borra un tablespace incluyendo sus datafiles.
 
-<img src="img/borrandotablespaceydatafiles.png" width = "700">
+```
+  DROP TABLESPACE tablespace2 INCLUDING CONTENTS AND DATAFILES;
+```
 
+## Datafiles
 
+Un datafile es la representación física de un tablespace. Son los "ficheros de datos" donde se almacena la información físicamente. Los tablespaces están formados por datafiles, el crecimiento en el uso de memoria o el modo de gestión determinarán algunas configuraciones en ellos.
 
+### Ejemplos de Administración de Datafiles
+<img src="img/datafiles_1.png" width="650">
+<img src="img/datafiles_2.png" width="650">
+
+<aside class="positive">
+<b>Nota:</b>
+<p>
+  Los nuevos archivos deben existir antes de poder renombrar, esta sentencia no crea archivos.
+</p>
+</aside>
