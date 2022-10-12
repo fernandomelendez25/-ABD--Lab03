@@ -421,3 +421,102 @@ Crear Rol “programador” y asignar los siguientes privilegios:
 - Poder crear recursos (RESOURCE)
 
 Asignar el rol al usuario creado en el ejercicio 4.
+
+## Perfiles
+
+Un perfil está constituido por un conjunto de límites de recursos de la base de datos. Diferentes perfiles pueden ser asignados a diferentes usuarios.
+
+Algunas consideraciones acerca de los perfiles.
+
+1. Es necesario el privilegio de sistema CREATE PROFILE.
+2. Existe un perfil por defecto denominado DEFAULT. Inicialmente todos los recursos asignados en él tienen valor UNLIMITED, por lo que es conveniente modificarlo.
+3. Un usuario al que no se le asigna perfil posee el perfil DEFAULT, aquellos recursos para los que en el perfil asignado no se ha definido un valor, o se ha indicado DEFAULT, toman el valor asignado en el perfil por defecto.
+
+**Sintaxis para la creación de un perfil.**
+
+```
+  CREATE PROFILE <nombre_perfil>
+  LIMIT <parametros> <valor>/UNLIMITED/DEFAULT;
+```
+
+A continuación, se describen los parámetros que pueden configurarse cuando se crea un perfil.
+
+<table>
+    <thead>
+        <tr>
+            <td><strong>Parametro</strong></td>
+            <td><strong>Descripcion</strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>SESSIONS_PER_USER</strong></td>
+            <td>Número de sesiones concurrentes.</td>
+        </tr>
+        <tr>
+            <td><strong>CONNECT_TIME</strong></td>
+            <td>Tiempo total para una sesión (minutos).</td>
+        </tr>
+        <tr>
+            <td><strong>IDLE_TIME</strong></td>
+            <td>Tiempo de inactividad continua en una sesión (minutos).</td>
+        </tr>
+        <tr>
+            <td><strong>LOGICAL_READS_PER_CALL </strong></td>
+            <td>Número de bloques de datos para una llamada de una SQL.</td>
+        </tr>
+        <tr>
+            <td><strong>PRIVATE_SGA</strong></td>
+            <td>Cantidad de espacio, en bytes, para uso privado reservado en la “shared pool” de la SGA (se emplea K o M para indicar kilobyte o megabytes).</td>
+        </tr>
+        <tr>
+            <td><strong>FAILED_LOGIN_ATTEMPTS</strong></td>
+            <td>Número de intentos fallidos de conexión antes del bloqueo.</td>
+        </tr>
+        <tr>
+            <td><strong>PASSWORD_LIFE_TIME</strong></td>
+            <td>Número de días en que la clave es válida para autenticación. Se indica un valor para PASSWORD_GRACE_TIME, la clave expira si no se cambia en este periodo. Si no se indica valor para PASSWORD_GRACE_TIME, por defecto UNLIMITED, se genera un aviso, pero el usuario puede seguir conectándose</td>
+        </tr>
+        <tr>
+            <td><strong>PASSWORD_GRACE_TIME </strong></td>
+            <td>Periodo de gracia donde se permite la conexión, pero se notifica la necesidad de cambiarla.</td>
+        </tr>
+        <tr>
+            <td><strong>PASSWORD_REUSE_TIME</strong></td>
+            <td>Número de días en los cuales la contraseña no puede reutilizarse.</td>
+        </tr>
+        <tr>
+            <td><strong>PASSWORD_REUSE_MAX</strong></td>
+            <td>Número de cambios de clave necesarios antes de poder reutilizar la clave actual.</td>
+        </tr>
+        <tr>
+            <td><strong>PASSWORD_LOCK_TIME</strong></td>
+            <td>Número de días que la cuenta estará bloqueada después de un cierto número de fallos de conexión indicado.</td>
+        </tr>
+    </tbody>
+</table>
+
+#### Ejercicio 6:
+Crear el perfil FCLD con los siguientes parámetros: 
+- Máximo número de intentos de login: 5
+- Tiempo de vida de la contraseña: 60
+- Número máximo de reutilización de una contraseña: 3
+- Tiempo de gracia de una contraseña: 5
+
+Asignar el perfil al usuario creado en el ejercicio 4.
+
+## Sobre los autores de esta guía práctica
+
+**Autores:**
+
+**Versión 1:** Diana Cristina Sánchez Muñoz (00188618@uca.edu.sv), Carlos Francisco Estévez Lemus (00120218@uca.edu.sv), Fernando Josué Vásquez Hernández (00179118@uca.edu.sv), Erick Varela Guzmán (evarela@uca.edu.sv). 
+
+**Versión 2:** Fernando José Meléndez Orellana (00018720@uca.edu.sv), Marcos Benjamin Granillo Flores (00028320@uca.edu.sv).
+
+**Responsables:** Erick Varela Guzmán (evarela@uca.edu.sv), Correspondencia: evarela@uca.edu.sv
+
+Departamento de Electrónica e Informática, Universidad Centroamericana José Simeón Cañas, La Libertad, El Salvador.
+
+Versión de este documento: Versión 2, 2022.
+
+This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).

@@ -318,6 +318,82 @@ TO &lt;nombre_del_rol&gt;;
 
       </google-codelab-step>
     
+      <google-codelab-step label="Perfiles" duration="0">
+        <p>Un perfil está constituido por un conjunto de límites de recursos de la base de datos. Diferentes perfiles pueden ser asignados a diferentes usuarios.</p>
+<p>Algunas consideraciones acerca de los perfiles.</p>
+<ol type="1">
+<li>Es necesario el privilegio de sistema CREATE PROFILE.</li>
+<li>Existe un perfil por defecto denominado DEFAULT. Inicialmente todos los recursos asignados en él tienen valor UNLIMITED, por lo que es conveniente modificarlo.</li>
+<li>Un usuario al que no se le asigna perfil posee el perfil DEFAULT, aquellos recursos para los que en el perfil asignado no se ha definido un valor, o se ha indicado DEFAULT, toman el valor asignado en el perfil por defecto.</li>
+</ol>
+<p><strong>Sintaxis para la creación de un perfil.</strong></p>
+<pre><code>  CREATE PROFILE &lt;nombre_perfil&gt;
+  LIMIT &lt;parametros&gt; &lt;valor&gt;/UNLIMITED/DEFAULT;
+</code></pre>
+<p>A continuación, se describen los parámetros que pueden configurarse cuando se crea un perfil.</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>Parametro</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>Descripcion</strong></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>SESSIONS_PER_USER</strong></p>
+</td><td colspan="1" rowspan="1"><p>Número de sesiones concurrentes.</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>CONNECT_TIME</strong></p>
+</td><td colspan="1" rowspan="1"><p>Tiempo total para una sesión (minutos).</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>IDLE_TIME</strong></p>
+</td><td colspan="1" rowspan="1"><p>Tiempo de inactividad continua en una sesión (minutos).</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>LOGICAL_READS_PER_CALL </strong></p>
+</td><td colspan="1" rowspan="1"><p>Número de bloques de datos para una llamada de una SQL.</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>PRIVATE_SGA</strong></p>
+</td><td colspan="1" rowspan="1"><p>Cantidad de espacio, en bytes, para uso privado reservado en la &#34;shared pool&#34; de la SGA (se emplea K o M para indicar kilobyte o megabytes).</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>FAILED_LOGIN_ATTEMPTS</strong></p>
+</td><td colspan="1" rowspan="1"><p>Número de intentos fallidos de conexión antes del bloqueo.</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>PASSWORD_LIFE_TIME</strong></p>
+</td><td colspan="1" rowspan="1"><p>Número de días en que la clave es válida para autenticación. Se indica un valor para PASSWORD_GRACE_TIME, la clave expira si no se cambia en este periodo. Si no se indica valor para PASSWORD_GRACE_TIME, por defecto UNLIMITED, se genera un aviso, pero el usuario puede seguir conectándose</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>PASSWORD_GRACE_TIME </strong></p>
+</td><td colspan="1" rowspan="1"><p>Periodo de gracia donde se permite la conexión, pero se notifica la necesidad de cambiarla.</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>PASSWORD_REUSE_TIME</strong></p>
+</td><td colspan="1" rowspan="1"><p>Número de días en los cuales la contraseña no puede reutilizarse.</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>PASSWORD_REUSE_MAX</strong></p>
+</td><td colspan="1" rowspan="1"><p>Número de cambios de clave necesarios antes de poder reutilizar la clave actual.</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>PASSWORD_LOCK_TIME</strong></p>
+</td><td colspan="1" rowspan="1"><p>Número de días que la cuenta estará bloqueada después de un cierto número de fallos de conexión indicado.</p>
+</td></tr>
+</table>
+<h3 is-upgraded>Ejercicio 6:</h3>
+<p>Crear el perfil FCLD con los siguientes parámetros:</p>
+<ul>
+<li>Máximo número de intentos de login: 5</li>
+<li>Tiempo de vida de la contraseña: 60</li>
+<li>Número máximo de reutilización de una contraseña: 3</li>
+<li>Tiempo de gracia de una contraseña: 5</li>
+</ul>
+<p>Asignar el perfil al usuario creado en el ejercicio 4.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Sobre los autores de esta guía práctica" duration="0">
+        <p><strong>Autores:</strong></p>
+<p><strong>Versión 1:</strong> Diana Cristina Sánchez Muñoz (00188618@uca.edu.sv), Carlos Francisco Estévez Lemus (00120218@uca.edu.sv), Fernando Josué Vásquez Hernández (00179118@uca.edu.sv), Erick Varela Guzmán (evarela@uca.edu.sv).</p>
+<p><strong>Versión 2:</strong> Fernando José Meléndez Orellana (00018720@uca.edu.sv), Marcos Benjamin Granillo Flores (00028320@uca.edu.sv).</p>
+<p><strong>Responsables:</strong> Erick Varela Guzmán (evarela@uca.edu.sv), Correspondencia: evarela@uca.edu.sv</p>
+<p>Departamento de Electrónica e Informática, Universidad Centroamericana José Simeón Cañas, La Libertad, El Salvador.</p>
+<p>Versión de este documento: Versión 2, 2022.</p>
+<p>This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
+
+
+      </google-codelab-step>
+    
   </google-codelab>
 
   <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
