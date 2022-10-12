@@ -140,11 +140,16 @@
     
       <google-codelab-step label="Datafiles" duration="0">
         <p>Un datafile es la representación física de un tablespace. Son los &#34;ficheros de datos&#34; donde se almacena la información físicamente. Los tablespaces están formados por datafiles, el crecimiento en el uso de memoria o el modo de gestión determinarán algunas configuraciones en ellos.</p>
-<h2 is-upgraded>Ejemplos de Administración de Datafiles</h2>
+<h2 is-upgraded>6.1 Ejemplos de Administración de Datafiles</h2>
 <p class="image-container"><img style="width: 650.00px" src="img\\19c256a49cb96405.png"><img style="width: 650.00px" src="img\\87e43db5e8483648.png"></p>
 <aside class="special"><p><strong>Nota:</strong></p>
 <p>   Los nuevos archivos deben existir antes de poder renombrar, esta sentencia no crea archivos. </p>
 </aside>
+<h2 is-upgraded>6.2 Limitantes en la creación de datafiles</h2>
+<ul>
+<li>Los sistemas operativos pueden poner un límite con respecto al número de archivos que un proceso puede abrir simultáneamente. También podría poner límites con respecto al tamaño de los  archivos creados.</li>
+<li>Oracle impone un límite máximo de datafiles creados por cualquier base de datos; no se puede exceder del número de datafiles creados por el parámetro de inicialización DB_FILES.</li>
+</ul>
 
 
       </google-codelab-step>

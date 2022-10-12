@@ -171,7 +171,7 @@ Borrando el tablespace1 anteriormente creado.
 
 Un datafile es la representación física de un tablespace. Son los "ficheros de datos" donde se almacena la información físicamente. Los tablespaces están formados por datafiles, el crecimiento en el uso de memoria o el modo de gestión determinarán algunas configuraciones en ellos.
 
-### Ejemplos de Administración de Datafiles
+### 6.1 Ejemplos de Administración de Datafiles
 <img src="img/datafiles_1.png" width="650">
 <img src="img/datafiles_2.png" width="650">
 
@@ -181,3 +181,7 @@ Un datafile es la representación física de un tablespace. Son los "ficheros de
   Los nuevos archivos deben existir antes de poder renombrar, esta sentencia no crea archivos.
 </p>
 </aside>
+
+### 6.2 Limitantes en la creación de datafiles
+- Los sistemas operativos pueden poner un límite con respecto al número de archivos que un proceso puede abrir simultáneamente. También podría poner límites con respecto al tamaño de los  archivos creados.
+- Oracle impone un límite máximo de datafiles creados por cualquier base de datos; no se puede exceder del número de datafiles creados por el parámetro de inicialización DB_FILES.
