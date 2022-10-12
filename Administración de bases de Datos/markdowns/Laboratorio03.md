@@ -185,3 +185,101 @@ Un datafile es la representación física de un tablespace. Son los "ficheros de
 ### 6.2 Limitantes en la creación de datafiles
 - Los sistemas operativos pueden poner un límite con respecto al número de archivos que un proceso puede abrir simultáneamente. También podría poner límites con respecto al tamaño de los  archivos creados.
 - Oracle impone un límite máximo de datafiles creados por cualquier base de datos; no se puede exceder del número de datafiles creados por el parámetro de inicialización DB_FILES.
+
+## Administración de Usuarios
+
+Un usuario es un nombre de acceso a la base de datos Oracle. Normalmente va asociado a una clave (password). 
+
+Lo que puede hacer un usuario una vez ha accedido a la base de datos depende de los permisos que tenga asignados ya sea directamente (GRANT) como sobre algún rol que tenga asignado (CREATE ROLE).
+
+El perfil que tenga asignado influye en los recursos del sistema de los que dispone un usuario a la hora de ejecutar Oracle (CREATE PROFILE).
+
+La sintaxis para crear un usuario es:
+
+```
+  CREATE USER  <usuario>
+  IDENTIFIED BY <contraseña>/EXTERNALLY
+  DEFAULT TABLESPACE <espacio>
+  TEMPORARY TABLESPACE <espacio>
+  QUOTA {<xx> K | UNLIMITED ON <espacio>}
+  PROFILE <perfil>
+  PASSWORD EXPIRE
+  ACCOUNT LOCK/UNLOCK
+```
+
+
+<table>
+    <thead>
+        <tr>
+            <td><strong>Campo</strong></td>
+            <td><strong>Descripcion</strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>&lt;usuario&gt;</strong></td>
+            <td>Debe ser único con respecto al resto de usuarios</td>
+        </tr>
+        <tr>
+            <td><strong>&lt;contraseña&gt;</strong></td>
+            <td>Un usuario autenticado de forma externa se ha de crear con la cláusula “IDENTIFIED EXTERNALLY”.</td>
+        </tr>
+        <tr>
+            <td><strong>DEFAULT TABLESPACE</strong></td>
+            <td>Indica aquel espacio de almacenamiento donde se crearán los objetos del esquema del usuario</td>
+        </tr>
+        <tr>
+            <td><strong>TEMPORARY TABLESPACE </strong></td>
+            <td>Indica el espacio de almacenamiento donde se almacenan los segmentos temporales requeridos por el usuario. No debe indicarse quota.</td>
+        </tr>
+        <tr>
+            <td><strong>QUOTA</strong></td>
+            <td>Indica la cantidad de espacio reservada en un determinado espacio de almacenamiento para el usuario. Por defecto un usuario no tiene quota en ningún espacio de almacenamiento. Indicando UNLIMITED, es ilimitado el espacio a usar.
+            </td>
+        </tr>
+        <tr>
+            <td><strong>PROFILE</strong></td>
+            <td>Indica el perfil a asignar al usuario.
+            </td>
+        </tr>
+        <tr>
+            <td> <strong>PASSWORD EXPIRE</strong> </td>
+            <td>Fuerza al usuario a cambiar la clave antes de conectarse a la base de datos.
+            </td>
+        </tr>
+        <tr>
+            <td><strong>ACCOUNT LOCK/UNLOCK</strong> </td>
+            <td>Bloquea/desbloquea la cuenta de usuario e inhabilita el acceso.
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+**Ejemplo**
+Creando un usuario sin derechos a guardar datos o crear objetos:
+```
+  CREATE USER usuariolimitado IDENTIFIED BY miclavesecreta;
+```
+
+#### Ejercicio 4
+Crear un usuario “user&lt;carnet&gt;” (sustituir <carnet> con su carnet) la contraseña será “pass123”. Asignar como tablespace por defecto el creado en el ejercicio 1, y como tablespace temporal “TEMP”. Definir una cuota de 5MB de uso de espacio en el tablespace por defecto.
+
+### 7.1 Modificación de un usuario 
+Los usuarios pueden cambiar sus propias claves, sin embargo, para cambiar cualquier otro parámetro es necesario el privilegio “ALTER USER”.
+
+Sintaxis para modificar un usuario.
+
+```
+  ALTER USER  <usuario>
+  IDENTIFIED BY <contraseña>/EXTERNALLY
+  DEFAULT TABLESPACE <espacio>
+  TEMPORARY TABLESPACE <espacio>
+  QUOTA {<xx> K | UNLIMITED ON <espacio>}
+  DEFAULT ROLE <role>/ALL/ALL EXCEPT <role>/NONE
+  PROFILE <perfil>
+  PASSWORD EXPIRE
+  ACCOUNT LOCK/UNLOCK
+```
+
+### 7.2 Eliminación de usuario
+Los usuarios pueden ser eliminados de la BD utilizando el comando DROP USER. Este comando tiene un único parámetro, CASCADE, el cual permite borrar todos los objetos del usuario antes de eliminar el usuario.

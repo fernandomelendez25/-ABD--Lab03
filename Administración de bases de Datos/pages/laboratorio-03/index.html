@@ -154,6 +154,73 @@
 
       </google-codelab-step>
     
+      <google-codelab-step label="Administración de Usuarios" duration="0">
+        <p>Un usuario es un nombre de acceso a la base de datos Oracle. Normalmente va asociado a una clave (password).</p>
+<p>Lo que puede hacer un usuario una vez ha accedido a la base de datos depende de los permisos que tenga asignados ya sea directamente (GRANT) como sobre algún rol que tenga asignado (CREATE ROLE).</p>
+<p>El perfil que tenga asignado influye en los recursos del sistema de los que dispone un usuario a la hora de ejecutar Oracle (CREATE PROFILE).</p>
+<p>La sintaxis para crear un usuario es:</p>
+<pre><code>  CREATE USER  &lt;usuario&gt;
+  IDENTIFIED BY &lt;contraseña&gt;/EXTERNALLY
+  DEFAULT TABLESPACE &lt;espacio&gt;
+  TEMPORARY TABLESPACE &lt;espacio&gt;
+  QUOTA {&lt;xx&gt; K | UNLIMITED ON &lt;espacio&gt;}
+  PROFILE &lt;perfil&gt;
+  PASSWORD EXPIRE
+  ACCOUNT LOCK/UNLOCK
+</code></pre>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>Campo</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>Descripcion</strong></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>&lt;usuario&gt;</strong></p>
+</td><td colspan="1" rowspan="1"><p>Debe ser único con respecto al resto de usuarios</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>&lt;contraseña&gt;</strong></p>
+</td><td colspan="1" rowspan="1"><p>Un usuario autenticado de forma externa se ha de crear con la cláusula &#34;IDENTIFIED EXTERNALLY&#34;.</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>DEFAULT TABLESPACE</strong></p>
+</td><td colspan="1" rowspan="1"><p>Indica aquel espacio de almacenamiento donde se crearán los objetos del esquema del usuario</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>TEMPORARY TABLESPACE </strong></p>
+</td><td colspan="1" rowspan="1"><p>Indica el espacio de almacenamiento donde se almacenan los segmentos temporales requeridos por el usuario. No debe indicarse quota.</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>QUOTA</strong></p>
+</td><td colspan="1" rowspan="1"><p>Indica la cantidad de espacio reservada en un determinado espacio de almacenamiento para el usuario. Por defecto un usuario no tiene quota en ningún espacio de almacenamiento. Indicando UNLIMITED, es ilimitado el espacio a usar.             </p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>PROFILE</strong></p>
+</td><td colspan="1" rowspan="1"><p>Indica el perfil a asignar al usuario.             </p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>PASSWORD EXPIRE </strong></p>
+</td><td colspan="1" rowspan="1"><p>Fuerza al usuario a cambiar la clave antes de conectarse a la base de datos.             </p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>ACCOUNT LOCK/UNLOCK </strong></p>
+</td><td colspan="1" rowspan="1"><p>Bloquea/desbloquea la cuenta de usuario e inhabilita el acceso.             </p>
+</td></tr>
+</table>
+<p><strong>Ejemplo</strong> Creando un usuario sin derechos a guardar datos o crear objetos:</p>
+<pre><code>  CREATE USER usuariolimitado IDENTIFIED BY miclavesecreta;
+</code></pre>
+<h3 is-upgraded>Ejercicio 4</h3>
+<p>Crear un usuario &#34;user&lt;carnet&gt;&#34; (sustituir  con su carnet) la contraseña será &#34;pass123&#34;. Asignar como tablespace por defecto el creado en el ejercicio 1, y como tablespace temporal &#34;TEMP&#34;. Definir una cuota de 5MB de uso de espacio en el tablespace por defecto.</p>
+<h2 is-upgraded>7.1 Modificación de un usuario</h2>
+<p>Los usuarios pueden cambiar sus propias claves, sin embargo, para cambiar cualquier otro parámetro es necesario el privilegio &#34;ALTER USER&#34;.</p>
+<p>Sintaxis para modificar un usuario.</p>
+<pre><code>  ALTER USER  &lt;usuario&gt;
+  IDENTIFIED BY &lt;contraseña&gt;/EXTERNALLY
+  DEFAULT TABLESPACE &lt;espacio&gt;
+  TEMPORARY TABLESPACE &lt;espacio&gt;
+  QUOTA {&lt;xx&gt; K | UNLIMITED ON &lt;espacio&gt;}
+  DEFAULT ROLE &lt;role&gt;/ALL/ALL EXCEPT &lt;role&gt;/NONE
+  PROFILE &lt;perfil&gt;
+  PASSWORD EXPIRE
+  ACCOUNT LOCK/UNLOCK
+</code></pre>
+<h2 is-upgraded>7.2 Eliminación de usuario</h2>
+<p>Los usuarios pueden ser eliminados de la BD utilizando el comando DROP USER. Este comando tiene un único parámetro, CASCADE, el cual permite borrar todos los objetos del usuario antes de eliminar el usuario.</p>
+
+
+      </google-codelab-step>
+    
   </google-codelab>
 
   <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
