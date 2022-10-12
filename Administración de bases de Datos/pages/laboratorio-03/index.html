@@ -221,6 +221,103 @@
 
       </google-codelab-step>
     
+      <google-codelab-step label="Roles y Privilegios" duration="0">
+        <p>Los roles se pueden utilizar para gestionar los comandos de sistema disponibles para los usuarios. Estos incluyen comandos como CREATE TABLE o SELECT ANY TABLE. Todos los usuarios que quieran acceder a la BD deben tener el rol CONNECT. Un usuario con el rol DBA tiene derecho para ver y manejar todos los datos de la BD.</p>
+<p>Algunos roles predefinidos en Oracle son: CREATE ROLE programador; SYSDBA, SYSOPER, OSDBA, OSOPER, EXP_FULL_DATABASE, IMP_FULL_DATABASE, SELECT_CATALOG_ROLE, EXECUTE_CATALOG_ROLE, DELETE_CATALOG_ROLE.</p>
+<p><strong>Ejemplo 3.1</strong> Administrando roles.</p>
+<pre><code>-- Creando rol
+CREATE ROLE RolGerente;
+
+-- Creando rol con password
+CREATE ROLE RolGerenteVentas IDENTIFIED BY password;
+
+-- Borrando rol
+DROP ROLE RolGerente;
+</code></pre>
+<p><strong>Parámetros para la creación de un perfil:</strong></p>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>Roles</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>Autorizaciones</strong></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>SYSOPER</strong></p>
+</td><td colspan="1" rowspan="1"><ul>
+<li>CREATE SPFILE</li>
+<li>ALTER DATABASE OPEN/MOUNT/BACKUP</li>
+<li>ALTER DATABASE ARCHIVELOG</li>
+<li>ALTER DATABASE RECOVER</li>
+</ul>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>SYSDBD </strong></p>
+</td><td colspan="1" rowspan="1"><ul>
+<li>STARTUP</li>
+<li> SHUTDOWN</li>
+<li>ALTER DATABASE: open, mount, back up, or change character set</li>
+<li>CREATE DATABASE</li>
+<li>DROP DATABASE</li>
+<li>CREATE SPFILE</li>
+<li>ALTER DATABASE ARCHIVELOG</li>
+<li>ALTER DATABASE RECOVER</li>
+</ul>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>OSOPER</strong></p>
+</td><td colspan="1" rowspan="1"><ul>
+<li>STARTUP</li>
+<li>SHUTDOWN</li>
+<li>ALTER DATABASE: open/mount</li>
+<li>ALTER DATABASE BACKUP CONTROLFILE</li>
+<li>ALTER TABLESPACE BEGIN/END BACKUP</li>
+<li>ARCHIVE LOG</li>
+<li>RECOVER</li>
+</ul>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>OSDBA</strong></p>
+</td><td colspan="1" rowspan="1"><p>OSDBA incluye todo lo que tiene el rol OSOPER, igual este usuario tiene más privilegios que otros usuarios.</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>EXP_FULL_DATABASE</strong></p>
+</td><td colspan="1" rowspan="1"><ul>
+<li>SELECT ANY TABLE</li>
+<li>BACKUP ANY TABLE</li>
+<li>EXECUTE ANY PROCEDURE</li>
+<li>EXECUTE ANY TYPE</li>
+<li>ADMINISTER RESOURCE MANAGER</li>
+<li>INSERT, DELETE, and UPDATE on the tables SYS.INCVID, SYS.INCFIL, and SYS.INCEXP</li>
+</ul>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>MP_FULL_DATABASE </strong></p>
+</td><td colspan="1" rowspan="1"><p>             Puede otorgar privilegios a roles y usuarios.             </p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>SELECT_CATALOG_ROL </strong></p>
+</td><td colspan="1" rowspan="1"><p>             Puede otorgar permisos a los usuarios de SELECT a algunos datos.             </p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>EXECUTE_CATALOG_ROLE  </strong></p>
+</td><td colspan="1" rowspan="1"><p>               Puede otorgar permisos a los usuarios para ejecutar procedimientos y paquetes.             </p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>DELETE_CATALOG_ROLE  </strong></p>
+</td><td colspan="1" rowspan="1"><p>               Permite a los usuarios eliminar registros de tablas             </p>
+</td></tr>
+</table>
+<p>Para asignar privilegios a un rol, tenemos el siguiente formato:</p>
+<pre><code>  GRANT &lt;privilegios&gt; ON &lt;nombre_de_función|nombre_de_tabla&gt; TO &lt;nombre_de_rol&gt;;
+</code></pre>
+<p>Se vería de la siguiente manera (este ejemplo es sin privilegios predefinidos):</p>
+<pre><code>GRANT SELECT, INSERT, UPDATE, DELETE
+ON customers
+TO &lt;nombre_del_rol&gt;;
+</code></pre>
+<p>También podemos eliminar privilegios:</p>
+<pre><code>  REVOKE &lt;privilegio&gt; ON &lt;nombre_de_tabla&gt; FROM &lt;nombre_de_rol&gt;;
+</code></pre>
+<h3 is-upgraded>Ejercicio 5</h3>
+<p>Crear Rol &#34;programador&#34; y asignar los siguientes privilegios:</p>
+<ul>
+<li>Poder conectarse a la base de datos (CONNECT)</li>
+<li>Poder crear recursos (RESOURCE)</li>
+</ul>
+<p>Asignar el rol al usuario creado en el ejercicio 4.</p>
+
+
+      </google-codelab-step>
+    
   </google-codelab>
 
   <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>

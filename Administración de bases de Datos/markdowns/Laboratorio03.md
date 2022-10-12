@@ -283,3 +283,141 @@ Sintaxis para modificar un usuario.
 
 ### 7.2 Eliminación de usuario
 Los usuarios pueden ser eliminados de la BD utilizando el comando DROP USER. Este comando tiene un único parámetro, CASCADE, el cual permite borrar todos los objetos del usuario antes de eliminar el usuario.
+
+## Roles y Privilegios
+
+Los roles se pueden utilizar para gestionar los comandos de sistema disponibles para los usuarios. Estos incluyen comandos como CREATE TABLE o SELECT ANY TABLE. Todos los usuarios que quieran acceder a la BD deben tener el rol CONNECT. Un usuario con el rol DBA tiene derecho para ver y manejar todos los datos de la BD.
+
+Algunos roles predefinidos en Oracle son: CREATE ROLE programador; SYSDBA, SYSOPER, OSDBA, OSOPER, EXP_FULL_DATABASE, IMP_FULL_DATABASE, SELECT_CATALOG_ROLE, EXECUTE_CATALOG_ROLE, DELETE_CATALOG_ROLE.
+
+**Ejemplo 3.1**
+Administrando roles.
+
+```
+-- Creando rol
+CREATE ROLE RolGerente;
+
+-- Creando rol con password
+CREATE ROLE RolGerenteVentas IDENTIFIED BY password;
+
+-- Borrando rol
+DROP ROLE RolGerente;
+```
+
+
+**Parámetros para la creación de un perfil:**
+
+<table>
+    <thead>
+        <tr>
+            <td><strong>Roles</strong></td>
+            <td><strong>Autorizaciones</strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>SYSOPER</strong></td>
+            <td>
+            <ul>
+            <li>CREATE SPFILE</li>
+            <li>ALTER DATABASE OPEN/MOUNT/BACKUP</li>
+            <li>ALTER DATABASE ARCHIVELOG</li>
+            <li>ALTER DATABASE RECOVER</li>
+            </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>SYSDBD </strong></td>
+            <td>
+            <ul>
+            <li>STARTUP</li>
+            <li> SHUTDOWN</li>
+            <li>ALTER DATABASE: open, mount, back up, or change character set</li>
+            <li>CREATE DATABASE</li>
+            <li>DROP DATABASE</li>
+            <li>CREATE SPFILE</li>
+            <li>ALTER DATABASE ARCHIVELOG</li>
+            <li>ALTER DATABASE RECOVER</li>
+            </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>OSOPER</strong></td>
+            <td>
+            <ul>
+            <li>STARTUP</li>
+            <li>SHUTDOWN</li>
+            <li>ALTER DATABASE: open/mount</li>
+            <li>ALTER DATABASE BACKUP CONTROLFILE</li>
+            <li>ALTER TABLESPACE BEGIN/END BACKUP</li>
+            <li>ARCHIVE LOG</li>
+            <li>RECOVER</li>
+            </ul>
+            </td>
+        </tr>
+        <tr>
+        <td><strong>OSDBA</strong></td>
+        <td>OSDBA incluye todo lo que tiene el rol OSOPER, igual este usuario tiene más privilegios que otros usuarios.</td>
+        </tr>
+        <tr>
+            <td><strong>EXP_FULL_DATABASE</strong></td>
+            <td>
+            <ul>
+            <li>SELECT ANY TABLE</li>
+            <li>BACKUP ANY TABLE</li>
+            <li>EXECUTE ANY PROCEDURE</li>
+            <li>EXECUTE ANY TYPE</li>
+            <li>ADMINISTER RESOURCE MANAGER</li>
+            <li>INSERT, DELETE, and UPDATE on the tables SYS.INCVID, SYS.INCFIL, and SYS.INCEXP</li>
+            </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>MP_FULL_DATABASE </strong></td>
+            <td>
+            Puede otorgar privilegios a roles y usuarios.
+            </td>
+        </tr>
+        <tr>
+            <td><strong>SELECT_CATALOG_ROL </strong></td>
+            <td>
+            Puede otorgar permisos a los usuarios de SELECT a algunos datos.
+            </td>
+        </tr>
+        <tr>
+            <td><strong>EXECUTE_CATALOG_ROLE  </strong></td>
+            <td>
+              Puede otorgar permisos a los usuarios para ejecutar procedimientos y paquetes.
+            </td>
+        </tr>
+        <tr>
+            <td><strong>DELETE_CATALOG_ROLE  </strong></td>
+            <td>
+              Permite a los usuarios eliminar registros de tablas
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+Para asignar privilegios a un rol, tenemos el siguiente formato: 
+```
+  GRANT <privilegios> ON <nombre_de_función|nombre_de_tabla> TO <nombre_de_rol>;
+```
+
+Se vería de la siguiente manera (este ejemplo es sin privilegios predefinidos):
+```
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON customers
+TO <nombre_del_rol>;
+```
+
+También podemos eliminar privilegios:
+```
+  REVOKE <privilegio> ON <nombre_de_tabla> FROM <nombre_de_rol>;
+```
+#### Ejercicio 5
+Crear Rol “programador” y asignar los siguientes privilegios:
+- Poder conectarse a la base de datos (CONNECT)
+- Poder crear recursos (RESOURCE)
+
+Asignar el rol al usuario creado en el ejercicio 4.
